@@ -1,4 +1,4 @@
-## React.JS PluralSight Course Material
+## React.JS Getting Started
 
-This is a collection of simple code examples using React.JS created while
-taking the introductory course on React.JS from PluralSight.
+This is a repo of notes and code examples created while
+taking the course React.js Getting Started from PluralSight.
