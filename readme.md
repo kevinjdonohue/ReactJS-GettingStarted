@@ -165,10 +165,142 @@ class App extends React.Component {
 ReactDOM.render(<App />, mountNode);
 ```
 
-## Working with Data
+## Module 2:  Working with Data
 
-## Building the Game Interface
+As an alternative to using jsComplete, as they did in the course, I decided to use `create-react-app` to bootstrap the creation of my getting-started-app.
 
-## Numbers Selection
+### Installing Create React App & Generating getting-started-app
 
-## Game State
+```bash
+npm install -g create-react-app
+
+create-react-app getting-started-app
+
+cd gettting-started-ap
+
+npm start
+```
+
+Within the `src` folder that is generated, there are couple key files created that I used to get started:
+
+* App.js - Used as a container - an outer most component
+* index.js - Used to house App and call `ReactDOM.render` on our App component
+
+In addition to the provided files I created the following files while following along:
+
+* card.js
+* cardlist.js
+* form.js
+
+The course starts out by having you create the card component, with fake data, to ensure you can render a (single) card.
+
+```js
+const Card = (props) => {
+    return (
+        <div style={{margin: '1em'}}>
+            <img width="100" alt={props.name} src={props.avatar_url} />
+            <div style={{display: 'inline-block', marginLeft: 10, verticalAlign: 'top'}}>
+                <div style={{fontSize: '1.35em', fontWeight: 'bold'}}>
+                    {props.name}
+                </div>
+                <div style={{fontSize: '1.25em'}}>
+                    {props.company}
+                </div>
+            </div>
+        </div>
+    );
+};
+```
+
+> Note:  In this example, anywhere there are `props` being referenced, we originally started out with hard coded data.
+
+```js
+<div style={{fontSize: '1.25em'}}>
+    Some Company
+</div>
+```
+
+Next, in order to display several cards, the course has you create a cardlist component and modify the card component to take in values (props)from the cardlist.  Again, in order to verify that you can display several cards, you are instructed to fake out the data.
+
+```js
+const CardList = (props) => {
+    return (
+        <div>
+            {props.cards.map(card => <Card key={card.id} {...card} />)}
+        </div>
+    );
+};
+```
+
+> Note:  Again, we started out just hard coding several different cards here to verify the cardlist would render properly.  Afterwards, once the card data was moved to the App component, we refactored the cardlist to leveral JavaScript's map function to create card components dynamically with the given card data.
+
+> A point was made about how React prefers to have a unique identifier for a collection of components (In our case card components) - so we added a `key` attribute to each card dynamically, providing the id (unique identifier from the source data) for each one.
+
+After verifying that you can render a set of cards, the course indicates that because we want to have control over the set of cards and because we'll eventually have a form to add new cards, we should move the cards into the state of a wrapping component - so that it is available to both the cardlist and (eventually) the form.  So, the card data becomes a collection at the App level - passed into the cardlist component, which in turn passes each card's data (via a map function) to a card component.
+
+```js
+class App extends Component {
+  state = {
+    cards: []
+  };
+
+  addNewCard = (cardInfo) => {
+    this.setState(prevState => ({
+      cards: prevState.cards.concat(cardInfo)
+    }));
+  }
+
+  render() {
+    return (
+      <div>
+        <Form onSubmit={this.addNewCard} />
+        <CardList cards={this.state.cards} />
+      </div>
+    );
+  }
+}
+```
+
+> Note: We started out with an App component that only dealt with the cardlist component and the cards collection (in state).  Later, after we created the form component (see below), we added the form component here as well as the addNewCard function to provide the desired behavior to the form.
+
+Once the App, cardlist and card components were working together, we added an additional component, a form.  The form's job is to take in a Github username, request the user's data from the Github Users API, and assign the returned data ('card' data) to the card collection in the App component.  In order make a call to the Github Users API, we added a javascript library called [axios](https://github.com/mzabriskie/axios) to facilitate making the AJAX call.
+
+```bash
+npm install axios
+```
+
+
+
+```js
+class Form extends Component {
+    state = {userName: ''}
+
+    handleSubmit = (event) => {
+        event.preventDefault();        
+        axios.get(`https://api.github.com/users/${this.state.userName}`)
+            .then(resp => {               
+                this.props.onSubmit(resp.data);
+                this.setState({userName: ''});
+            });
+    };
+
+    render() {
+        return (
+            <form onSubmit={this.handleSubmit}>
+                <input type="text" 
+                value={this.state.userName} 
+                onChange={(event) => this.setState({userName: event.target.value})} 
+                placeholder="Github username" required />
+                <button type="submit">Add card</button>
+            </form>
+        );
+    }
+}
+```
+
+
+## Module 3:  Building the Game Interface
+
+## Module 4:  Numbers Selection
+
+## Module 5:  Game State
