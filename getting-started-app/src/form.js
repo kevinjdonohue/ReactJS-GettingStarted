@@ -6,10 +6,13 @@ class Form extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();        
-        axios.get(`https://api.github.com/users/${this.state.userName}`)
-            .then(resp => {               
-                this.props.onSubmit(resp.data); //the onSubmit function here is the addNewCard function that was pased in by the App component
+        axios.get(`http://api.github.com/users/${this.state.userName}`)
+            .then(response => {               
+                this.props.onSubmit(response.data); //the onSubmit function here is the addNewCard function that was pased in by the App component
                 this.setState({userName: ''});  //this clears out the local state's userName variable after the new card is added
+            })
+            .catch(error => {
+                console.log("An error occurred: " + error.response.status + " - " + error.response.statusText + " - " + error.response.request.responseURL);
             });
     };
 
