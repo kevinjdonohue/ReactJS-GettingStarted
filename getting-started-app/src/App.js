@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './App.css';
 import Form from './form';
 import CardList from './cardlist';
 
@@ -16,7 +15,7 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div id="gettting-started-app">        
         <Form onSubmit={this.addNewCard} />
         <CardList cards={this.state.cards} />
       </div>
