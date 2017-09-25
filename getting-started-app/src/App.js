@@ -15,7 +15,7 @@ class App extends Component {
 
   render() {
     return (
-      <div id="gettting-started-app">        
+      <div id="getting-started-app">        
         <Form onSubmit={this.addNewCard} />
         <CardList cards={this.state.cards} />
       </div>
