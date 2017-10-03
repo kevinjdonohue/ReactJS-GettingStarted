@@ -298,7 +298,6 @@ class Form extends Component {
 }
 ```
 
-
 ## Module 3:  Building the Game Interface
 
 ## Module 4:  Numbers Selection
