@@ -33,3 +33,7 @@ span {
   color: #99bb99;
   cursor: not-allowed;
 }
+
+.numbers {
+  border: 1px solid black;
+}
