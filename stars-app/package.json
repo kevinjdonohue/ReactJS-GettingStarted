@@ -7,7 +7,7 @@
     "font-awesome": "^4.7.0",
     "lodash": "^4.17.4",
     "react": "^15.6.2",
-    "react-dom": "^15.6.2",
+    "react-dom": "^16.0.1",
     "react-scripts": "1.0.13"
   },
   "scripts": {
